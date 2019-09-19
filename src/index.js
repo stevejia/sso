@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import utils from './utils';
+import LoginForm from './modules/login';
+import 'antd/dist/antd.css'
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +16,7 @@ class App extends React.Component {
                 <Switch>
                     <Route path="/Login" render={(matched) => {
                         var params = utils.getParams(matched.location.search)
-                        return <Login test={params.test} />
+                        return <LoginForm params={params} />
                     }}></Route>
                     <Route component={NoMatch}></Route>
                 </Switch>
@@ -50,10 +52,10 @@ class Login extends React.Component {
         this.state = { test: props.test };
     }
 
-    componentDidMount() {
-        console.log("did mount");
-        this.setState({ test: "991" })
-    }
+    // componentDidMount() {
+    //     console.log("did mount");
+    //     this.setState({ test: "991" })
+    // }
 
     componentDidUpdate() {
         console.log("update");
