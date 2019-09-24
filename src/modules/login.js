@@ -1,3 +1,4 @@
+import http from "./utils/http";
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
 class NormalLoginForm extends React.Component {
@@ -13,9 +14,10 @@ class NormalLoginForm extends React.Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
+        await http.get("account/login", values);
       }
     });
   };
@@ -61,7 +63,6 @@ class NormalLoginForm extends React.Component {
           >
             Log in
           </Button>
-          Or <a href="">register now!</a>
         </Form.Item>
       </Form>
     );
