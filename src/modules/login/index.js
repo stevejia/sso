@@ -1,12 +1,7 @@
-import http from "./utils/http";
+import http from "@/utils/http";
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
 class NormalLoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    // this.state = { test: props.test };
-    console.log(props.params);
-  }
   componentDidMount() {
     this.props.form.setFieldsValue({
       username: this.props.params.test
@@ -17,11 +12,17 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
-        await http.get("account/login", values);
+        let result = await http.post("account/ssologin", values);
+        console.log(result);
       }
     });
   };
-
+  checkLoginStatus = async e => {
+    await http.get("account/check", { loginName: "admin" });
+  };
+  logout = async e => {
+    await http.post("account/logout");
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -53,15 +54,31 @@ class NormalLoginForm extends React.Component {
             valuePropName: "checked",
             initialValue: true
           })(<Checkbox>Remember me</Checkbox>)}
-          <a className="login-form-forgot" href="">
+          {/* <a className="login-form-forgot" href="#">
             Forgot password
-          </a>
+          </a> */}
           <Button
             type="primary"
             htmlType="submit"
             className="login-form-button"
           >
             Log in
+          </Button>
+          <Button
+            type="primary"
+            htmlType="button"
+            className="login-form-button"
+            onClick={this.checkLoginStatus}
+          >
+            Check Login Status
+          </Button>
+          <Button
+            type="primary"
+            htmlType="button"
+            className="login-form-button"
+            onClick={this.logout}
+          >
+            Log out
           </Button>
         </Form.Item>
       </Form>

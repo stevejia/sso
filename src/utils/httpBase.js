@@ -1,4 +1,6 @@
 import axios from "axios";
+import { showSpinAction } from "../redux/reducers/spin";
+import store from "../redux/store";
 // import store from "@/store";
 // import router from "@/router";
 // import { utils } from "@/utils/utils";
@@ -23,6 +25,7 @@ const ajax = (method, isDownload = false) => {
 
     return new Promise((resolve, reject) => {
       //   needLoading && store.commit("showLoading");
+      store.dispatch(showSpinAction(true));
       httpMethods++;
       let config = {
         method: method,
@@ -45,11 +48,13 @@ const ajax = (method, isDownload = false) => {
               if (response.data.failed) {
                 showStateError(response);
                 reject(response.data);
+                store.dispatch(showSpinAction(false));
                 // needLoading && store.commit("hideLoading");
                 return;
               }
             }
             resolve(response.data);
+            store.dispatch(showSpinAction(false));
             // needLoading && store.commit("hideLoading");
           } else {
             const blob = new Blob([response.data], {
@@ -68,6 +73,7 @@ const ajax = (method, isDownload = false) => {
 
           httpMethods--;
           if (!httpMethods) {
+            store.dispatch(showSpinAction(false));
             // needLoading && store.commit("hideLoading");
           }
         })
@@ -76,6 +82,7 @@ const ajax = (method, isDownload = false) => {
           reject(error);
           httpMethods--;
           if (!httpMethods) {
+            store.dispatch(showSpinAction(false));
             // needLoading && store.commit("hideLoading");
           }
         });
