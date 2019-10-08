@@ -1,11 +1,6 @@
 import axios from "axios";
 import { showSpinAction } from "../redux/reducers/spin";
 import store from "../redux/store";
-// import store from "@/store";
-// import router from "@/router";
-// import { utils } from "@/utils/utils";
-// import { Message } from "iview";
-// import goMainLogin from "@/utils/mainLogin";
 let httpMethods = 0;
 const ajax = (method, isDownload = false) => {
   return (url, params, needLoading = true, fileName, extensions = "xls") => {
@@ -118,6 +113,13 @@ function showStateError(response) {
       return Promise.reject(response);
     case 401:
       // goMainLogin();
+      console.log(window.location.href);
+      var newUrl =
+        Window.mainLoginUrl +
+        "/login?returnUrl=" +
+        encodeURIComponent(window.location.href);
+      window.location.href = newUrl;
+      console.log(newUrl);
       break;
     case 404:
       showMessage(message);

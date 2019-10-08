@@ -3,6 +3,7 @@ import React from "react";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
 class NormalLoginForm extends React.Component {
   componentDidMount() {
+    console.log(this.props.params.returnUrl);
     this.props.form.setFieldsValue({
       username: this.props.params.test
     });
@@ -12,16 +13,16 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
-        let result = await http.post("account/ssologin", values);
-        console.log(result);
+        await http.post("sso/login", values);
+        window.location.href = this.props.params.returnUrl;
       }
     });
   };
   checkLoginStatus = async e => {
-    await http.get("account/check", { loginName: "admin" });
+    await http.get("sso/check", { loginName: "admin" });
   };
   logout = async e => {
-    await http.post("account/logout");
+    await http.post("sso/logout");
   };
   render() {
     const { getFieldDecorator } = this.props.form;

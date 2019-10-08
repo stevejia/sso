@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import utils from "../../utils";
 import LoginForm from "../login";
+import UserList from "../user";
 import NoMatch from "../404";
 import { Spin } from "antd";
 import store from "../../redux/store";
@@ -28,6 +29,7 @@ class View extends React.Component {
                 return <LoginForm params={params} />;
               }}
             ></Route>
+            <Route path="/user/list" component={UserList}></Route>
             <Route component={NoMatch}></Route>
           </Switch>
         </Router>
