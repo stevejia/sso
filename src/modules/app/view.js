@@ -1,9 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import utils from "../../utils";
-import LoginForm from "../login";
-import UserList from "../user";
-import NoMatch from "../404";
+import AuthRouter from "./auth";
 import { Spin } from "antd";
 import store from "../../redux/store";
 class View extends React.Component {
@@ -11,7 +7,7 @@ class View extends React.Component {
     super(props);
     this.state = { show: this.props.show };
   }
-  componentDidMount() {
+  async componentDidMount() {
     store.subscribe(() => {
       let state = store.getState();
       this.setState({ show: state.spin.show });
@@ -20,19 +16,7 @@ class View extends React.Component {
   render() {
     return (
       <div>
-        <Router>
-          <Switch>
-            <Route
-              path="/Login"
-              render={matched => {
-                var params = utils.getParams(matched.location.search);
-                return <LoginForm params={params} />;
-              }}
-            ></Route>
-            <Route path="/user/list" component={UserList}></Route>
-            <Route component={NoMatch}></Route>
-          </Switch>
-        </Router>
+        <AuthRouter></AuthRouter>
         <Spin spinning={this.state.show} size="large" />
       </div>
     );

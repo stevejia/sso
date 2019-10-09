@@ -31,6 +31,7 @@ const ajax = (method, isDownload = false) => {
       } else {
         params = formatParams(params);
         config["params"] = params;
+        config["params"]["_t"] = new Date().getTime();
         if (isDownload) {
           // download 模式下 responseType: 'blob'
           config["responseType"] = "blob";

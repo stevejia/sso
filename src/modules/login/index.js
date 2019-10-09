@@ -2,12 +2,6 @@ import http from "@/utils/http";
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
 class NormalLoginForm extends React.Component {
-  componentDidMount() {
-    console.log(this.props.params.returnUrl);
-    this.props.form.setFieldsValue({
-      username: this.props.params.test
-    });
-  }
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {

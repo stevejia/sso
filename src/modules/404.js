@@ -1,11 +1,12 @@
 import React from "react";
+import image from "@/content/images/404.jpg";
 class NoMatch extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   render() {
-    return <div>No Match</div>;
+    return (
+      <div>
+        <img alt="dd" src={image}></img>
+      </div>
+    );
   }
 }
 export default NoMatch;

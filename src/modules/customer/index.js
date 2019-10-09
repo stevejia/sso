@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import http from "@/utils/http";
-class UserList extends React.Component {
+class CustomerList extends React.Component {
   onLogout = async e => {
     await http.post("sso/logout");
   };
@@ -21,4 +21,4 @@ class UserList extends React.Component {
     );
   }
 }
-export default UserList;
+export default CustomerList;
